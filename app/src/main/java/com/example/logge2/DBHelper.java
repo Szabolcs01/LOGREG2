@@ -2,8 +2,10 @@ package com.example.logge2;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 
 import androidx.annotation.Nullable;
 
@@ -11,17 +13,12 @@ public class DBHelper extends SQLiteOpenHelper  {
 
      static   String name= "felhasznalo.db";
       static  int   version= 1;
-String createTableUser="CREATE TABLE if not exist  \"felhasznalo \" (\n" +
-        "\t\"id\"\tINTEGER,\n" +
-        "\t\"email\"\tTEXT NOT NULL,\n" +
-        "\t\"felhnev\"\tTEXT NOT NULL,\n" +
-        "\t\"jelszo\"\tTEXT NOT NULL,\n" +
-        "\t\"teljesnev\"\tTEXT NOT NULL,\n" +
-        "\tPRIMARY KEY(\"id\" AUTOINCREMENT)\n" +
-        ")";
+String createTableUser="CREATE TABLE if not exists `felhasznalo`(`id` INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        "`email`TEXT NOT NULL,"+" `felhnev` TEXT NOT NULL,"+"`jelszo`TEXT NOT NULL,"+
+        "`teljesnev` TEXT NOT NULL)";
 
-    public DBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public DBHelper(@Nullable Context context) {
+        super(context, name, null, version);
         getWritableDatabase().execSQL(createTableUser);
 
 
@@ -29,6 +26,22 @@ String createTableUser="CREATE TABLE if not exist  \"felhasznalo \" (\n" +
 public void insertUser(ContentValues contentValues)
 {
     getWritableDatabase().insert("felhasznalo","",contentValues);
+}
+public boolean isLoginValid(String felhnev,String jelszo)
+{
+    String sql="Select count(*) from user where felhnev='"+felhnev+"'and jelszo='"+jelszo+"'";
+    SQLiteStatement statement=getReadableDatabase().compileStatement(sql);
+    long l=statement.simpleQueryForLong();
+    statement.close();
+    if (l==1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
 }
 
     @Override
@@ -40,4 +53,5 @@ public void insertUser(ContentValues contentValues)
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
 }

@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 EditText re_userinput,re_passwordinput;
 Button bejelentkezes,regisztracio;
+DBHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,13 +21,23 @@ Button bejelentkezes,regisztracio;
         re_passwordinput=findViewById(R.id.re_passwordinput);
         bejelentkezes=findViewById(R.id.bejelentkezes);
         regisztracio=findViewById(R.id.regisztracio);
-
+        dbHelper=new DBHelper(this);
         bejelentkezes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
              String usernameValue=re_userinput.getText().toString();
              String passwordValue=re_passwordinput.getText().toString();
 
+             if (dbHelper.isLoginValid(usernameValue,passwordValue))
+             {
+                 Intent intent=new Intent(MainActivity.this,LoggedInActivity.class);
+                 startActivity(intent);
+                 Toast.makeText(MainActivity.this, "Sikeres bejelentkezes", Toast.LENGTH_SHORT).show();
+             }
+             else
+             {
+                 Toast.makeText(MainActivity.this, "Sikertelen bejelentkezes rossz a felhasználó név vagy a jelszó", Toast.LENGTH_SHORT).show();
+             }
             }
         });
 
