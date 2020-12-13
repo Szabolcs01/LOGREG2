@@ -30,13 +30,31 @@ DBHelper dbHelper;
         regisztracioelkuldese.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 String emailValue=re_email.getText().toString();
                 String teljesnevlValue=re_teljesNev.getText().toString();
                 String passwordValue=re_password.getText().toString();
                 String usernameValue=re_felhasznaloNev.getText().toString();
-
-
-                if (usernameValue.length()>1)
+                if (re_email.getText().toString().trim().equals(" "))
+                {
+                    Toast toast=Toast.makeText(getApplicationContext(),"Nem adtál meg e-mailt!!!",Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else   if (re_teljesNev.getText().toString().trim().equals(" "))
+                {
+                    Toast toast=Toast.makeText(getApplicationContext(),"Nem adtál meg teljesnevet nevet !!!",Toast.LENGTH_SHORT);
+                    toast.show();
+                } else   if (re_password.getText().toString().trim().equals(" "))
+                {
+                    Toast toast=Toast.makeText(getApplicationContext(),"Nem adtál meg jelszót !!!",Toast.LENGTH_SHORT);
+                    toast.show();
+                } else   if (re_felhasznaloNev.getText().toString().trim().equals(" "))
+                {
+                    Toast toast=Toast.makeText(getApplicationContext(),"Nem adtál meg felhasználó nevet !!!",Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+              else  if (usernameValue.length()>1 )
                 {
                     ContentValues contentValues=new ContentValues();
                     contentValues.put("email",emailValue);
