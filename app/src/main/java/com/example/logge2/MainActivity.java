@@ -28,7 +28,7 @@ DBHelper dbHelper;
              String usernameValue=re_userinput.getText().toString();
              String passwordValue=re_passwordinput.getText().toString();
 
-             if (dbHelper.isLoginValid(usernameValue,passwordValue))
+             if (dbHelper.isLoginValid(usernameValue,passwordValue) || dbHelper.isLoginemail(usernameValue,passwordValue))
              {
                  Intent intent=new Intent(MainActivity.this,LoggedInActivity.class);
                  startActivity(intent);
@@ -36,7 +36,7 @@ DBHelper dbHelper;
              }
              else
              {
-                 Toast.makeText(MainActivity.this, "Sikertelen bejelentkezes rossz a felhasználó név vagy a jelszó", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(MainActivity.this, "Sikertelen bejelentkezes rossz a felhasználó/email név vagy a jelszó", Toast.LENGTH_SHORT).show();
              }
             }
         });

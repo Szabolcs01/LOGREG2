@@ -44,6 +44,22 @@ public boolean isLoginValid(String felhnev,String jelszo)
 
 }
 
+public boolean isLoginemail(String email,String jelszo)
+{
+    String sql="Select count(*) from user where email='"+email+"'and jelszo='"+jelszo+"'";
+    SQLiteStatement statement=getReadableDatabase().compileStatement(sql);
+    long l=statement.simpleQueryForLong();
+    statement.close();
+    if (l==1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 
